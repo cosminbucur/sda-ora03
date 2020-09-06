@@ -13,7 +13,7 @@ public class AccountJdbcDao implements AccountDao {
 
     public static final String URL = "jdbc:mysql://localhost:3306/hibernate?serverTimezone=UTC";
     public static final String USERNAME = "root";
-    public static final String PASSWORD = "Rootpass3#";
+    public static final String PASSWORD = "root";
 
     private static final Logger logger = Logger.getLogger(AccountJdbcDao.class.getName());
 
