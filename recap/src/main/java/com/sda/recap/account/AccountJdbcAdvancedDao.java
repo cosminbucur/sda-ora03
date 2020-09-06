@@ -25,14 +25,14 @@ public class AccountJdbcAdvancedDao implements AccountDao {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             // create statement
-            String sql = "INSERT INTO account(name, email, password) VALUES (?,?,?)";
+            String sql = "INSERT INTO account(name, email, password) VALUES (?, ?, ?)";
             statement = connection.prepareStatement(sql);
             statement.setString(1, account.getName());
             statement.setString(2, account.getEmail());
             statement.setString(3, account.getPassword());
 
             // execute
-            statement.execute(sql);
+            statement.executeUpdate();
 
             // * process response (if needed)
         } catch (SQLException e) {
@@ -96,10 +96,10 @@ public class AccountJdbcAdvancedDao implements AccountDao {
         Account result = null;
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -127,8 +127,7 @@ public class AccountJdbcAdvancedDao implements AccountDao {
             statement.setString(3, accountData.getPassword());
             statement.setLong(4, id);
 
-            // execute
-            statement.executeUpdate(sql);
+            statement.executeUpdate();
         } catch (SQLException e) {
             logger.severe("failed to update");
         }
@@ -142,7 +141,7 @@ public class AccountJdbcAdvancedDao implements AccountDao {
 
             statement.setLong(1, id);
 
-            statement.execute(sql);
+            statement.executeUpdate();
         } catch (SQLException e) {
             logger.severe("failed to delete");
         }
